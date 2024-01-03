@@ -1,0 +1,17 @@
+
+.nav-btn{
+    float: right;
+}
+.form-group label{
+    text-align: left;
+}
+.card{
+    width: 106%;
+}
+.row{
+    height: 45px;
+}
+.reg{
+    font-weight: bold;
+    font-size: 26px;
+}
