@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cred_react_abilash/static/css/main.e462e4dc.css",
+    "main.js": "/cred_react_abilash/static/js/main.2ec48fce.js",
+    "index.html": "/cred_react_abilash/index.html",
+    "main.e462e4dc.css.map": "/cred_react_abilash/static/css/main.e462e4dc.css.map",
+    "main.2ec48fce.js.map": "/cred_react_abilash/static/js/main.2ec48fce.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e462e4dc.css",
+    "static/js/main.2ec48fce.js"
+  ]
+}
