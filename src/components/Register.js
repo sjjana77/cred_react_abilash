@@ -12,20 +12,37 @@ const Register=()=>{
         image:'',
         role:'',
         skills:'',
-        email:''
+        email:'',
+        password:''
 })
+const [users, setUsers] = useState([]);
     const [status,setstatus]=useState('');
  //   const [selectedOption, setSelectedOption] = useState('');
 
     // const handleOptionChange = (event) => {
     //   setSelectedOption(event.target.value);
     // };
+    useEffect(() => {
+      // Fetch data from the API
+      axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg')
+        .then(response => {
+          // Update the state with the data from the API response
+          setUsers(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+    
+    // useEffect(()=>{
+    //   console.log('aaa',users);
+    // },[users])
   
 
 const handleimage = (e)=>{
     const formData = new FormData();
     formData.append("image",document.getElementById("image").files[0]);
-    axios.post('http://localhost:3001/imageupload',formData).
+    axios.post('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg',formData).
     then((result)=>{
         console.log(result.data.img_name);
             setrecords({...records,image:result.data.img_name})
@@ -48,12 +65,18 @@ const registerForm=()=>{
         setstatus("");
     },3000)
     }
-    else if(records.image===''){
-      setstatus('image is missing..!')
+    else if(records.password===''){
+      setstatus('Password is missing..!')
       setTimeout(()=>{
         setstatus("");
     },3000)
     }
+    // else if(records.image===''){
+    //   setstatus('image is missing..!')
+    //   setTimeout(()=>{
+    //     setstatus("");
+    // },3000)
+    // }
     else if(records.role===''){
       setstatus('role  is missing..!')
       setTimeout(()=>{
@@ -66,34 +89,52 @@ const registerForm=()=>{
         setstatus("");
     },3000)
     }
-    else if(records.mobile===''){
+    else if(records.email===''){
       setstatus('email is missing..!')
       setTimeout(()=>{
         setstatus("");
     },3000)
     }
+
     else{
-        
-      axios.post('http://localhost:3001/reg',records).
-      then((result)=>{
-          if(result.data.code=="200"){
-            setrecords([]);
-            setstatus(result.data.msg);
-            window.location.href="/login";
-            setTimeout(()=>{
-                setstatus("");
-            },3000)
-          }
-          else{
-            setstatus(result.data.msg);
-            setTimeout(()=>{
-                setstatus("");
-            },3000)
-          }
+      {users.map((user, index) => (
+        user.email === records.email ? (
+          <li key={index}>{user.email} matches records.email</li>
+        ) : (
+          <li key={index}>{user.email} does not match records.email</li>
+        )
+      ))}
+
+      axios.post('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg', records)
+      .then((result) => {
+        if (result.data.code === "200") {
+          setrecords([]);
+          setstatus(result.data.msg);
+          window.location.href = "/login";
+          setTimeout(() => {
+            setstatus("");
+          }, 3000);
+        } else {
+          setstatus(result.data.msg);
+          setTimeout(() => {
+            setstatus("");
+          }, 3000);
+        }
+      })
+      .catch((error) => {
+        console.error("Error while making the API call:", error);
+        // Handle error accordingly
       });
     }
-   
+    //abi
+      
+    
+  
 }
+
+
+
+
 const WhichButton = ()=>{
   if((document.getElementById("username") === document.activeElement)===false)  {
       if(document.getElementById("username").value===""){
@@ -131,6 +172,13 @@ const WhichButton = ()=>{
           document.querySelector("#imagee").classList = "focus-input";
       }
   }
+  if((document.getElementById("password") === document.activeElement)===false)  {
+    if(document.getElementById("password").value===""){
+    document.querySelector("#passwordd").classList.remove("focus-input")}
+    else{
+        document.querySelector("#passwordd").classList = "focus-input";
+    }
+}
  
 }
 const loginform=()=>{
@@ -179,9 +227,23 @@ const loginform=()=>{
             required=""
             id='email'
             onChange={handleChange}
-            value={setrecords.email}
+            value={records.email}
           />
           <label id='emaill'>Email</label>
+        </div>
+        <div className="user-box">
+          <input
+            onFocus={() => {
+              document.querySelector("#passwordd").classList = "focus-input";
+            }}
+            type="password"
+            name="password"
+            required=""
+            id='password'
+            onChange={handleChange}
+            value={setrecords.password}
+          />
+          <label id='passwordd'>Password</label>
         </div>
         <div className="user-box">
           <input
@@ -218,9 +280,9 @@ const loginform=()=>{
       //  value={selectedOption} 
         onChange={handleChange}>
         <option className='hidden'>Role</option>
-          <option value="Admin">Admin</option>
-          <option value="Manager">Manager</option>
-          <option value="Employee">Employee</option>
+          <option value="1">Admin</option>
+          <option value="2">Manager</option>
+          <option value="3">Employee</option>
           </select>
         </div>
        

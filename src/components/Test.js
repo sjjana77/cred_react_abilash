@@ -3,26 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const Usersprofile = ()=>{
-    const [overalldetails, setoveralldetails] = useState([
-        {
-          "_id": "6596203a8f133a03e8f91b4a",
-          "username": "abilash",
-          "mobile": "9080399133",
-          "image": "",
-          "role": "Employee",
-          "skills": "react",
-          "email": "abilashv281999@gmail.com"
-        },
-        {
-          "_id": "659621ac8f133a03e8f91b4c",
-          "username": "Abi",
-          "mobile": "",
-          "image": "",
-          "role": "",
-          "skills": "",
-          "email": ""
-        }
-      ]);
+    const [overalldetails,setoveralldetails] =useState([]);
     const Imgupload = ()=>{
         const formData = new FormData();
         formData.append("image",document.getElementById("file").files[0]);
@@ -88,6 +69,7 @@ const Usersprofile = ()=>{
           let details = JSON.parse(window.sessionStorage.user_details);
           console.log(details);
           setcurrdetails({
+
               user_id:details.user_id,
               mobile:details.mobile,
               email:details.email,
@@ -147,7 +129,7 @@ const Usersprofile = ()=>{
     const design = ()=>{
         let details = JSON.parse(window.sessionStorage.user_details);
         console.log(details);
-        if(details.role==="3"){
+        if(details.role==="Employee"){
             setdesignn(()=>{
                 return (
                     <div className='employee'>
@@ -171,7 +153,7 @@ const Usersprofile = ()=>{
                 )
             });
         }
-        else if(details.role==="2"){
+        else if(details.role==="Manager"){
             sessionStorage.setItem("edit","");
             axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg',details).
             then((result)=>{

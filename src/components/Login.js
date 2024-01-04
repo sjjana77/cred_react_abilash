@@ -42,6 +42,24 @@ const Login = ()=>{
     });
     const[loginstatus,setloginstatus] = useState('');
     const[pswstatus,setpswstatus] = useState('');
+    const [users, setUsers] = useState([]);
+
+
+    useEffect(() => {
+        // Fetch data from the API
+        axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg')
+          .then(response => {
+            // Update the state with the data from the API response
+            setUsers(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      
+      useEffect(()=>{
+        console.log('aaa',users);
+      },[users])
 
 
     const handleChange = (e)=>{
@@ -91,6 +109,7 @@ const Login = ()=>{
         }
     }
     const Loginn = ()=>{
+        let flag=0;
         if(regdata.userid===""){
             setloginstatus("Username Missing");
         }
@@ -98,6 +117,17 @@ const Login = ()=>{
             setloginstatus("Password Missing");
         }
         else{
+            console.log('abi');
+            users.forEach((user) => {
+                if (user.email === regdata.user) {
+                  flag = 1;
+                  window.location.href="/usersprofile";
+                }
+              });
+
+
+
+
             setloginstatus("");
             const sendData = {
             user_id : regdata.userid,
@@ -180,7 +210,7 @@ const Registerdirection=()=>{
   <form>
     <div className="user-box">
       <input onFocus={()=>{document.querySelector("#useridd").classList="focus-input"}} type="text" name="userid" required="" id='userid' onChange={handleChange} value={regdata.user} />
-      <label id='useridd'>Username</label>
+      <label id='useridd'>Email</label>
     </div>
     <div className="user-box">
       <input onFocus={()=>{document.querySelector("#psww").classList="focus-input"}} type="password" name="psw" required="" id='psw' onChange={handleChange} value={regdata.psw} />
