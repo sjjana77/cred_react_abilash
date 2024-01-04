@@ -24,7 +24,7 @@ const [users, setUsers] = useState([]);
     // };
     useEffect(() => {
       // Fetch data from the API
-      axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg')
+      axios.get('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg')
         .then(response => {
           // Update the state with the data from the API response
           setUsers(response.data);
@@ -42,7 +42,7 @@ const [users, setUsers] = useState([]);
 const handleimage = (e)=>{
     const formData = new FormData();
     formData.append("image",document.getElementById("image").files[0]);
-    axios.post('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg',formData).
+    axios.post('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg',formData).
     then((result)=>{
         console.log(result.data.img_name);
             setrecords({...records,image:result.data.img_name})
@@ -105,21 +105,12 @@ const registerForm=()=>{
         )
       ))}
 
-      axios.post('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg', records)
+      axios.post('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg', records)
       .then((result) => {
-        if (result.data.code === "200") {
-          setrecords([]);
-          setstatus(result.data.msg);
-          window.location.href = "/login";
-          setTimeout(() => {
-            setstatus("");
-          }, 3000);
-        } else {
-          setstatus(result.data.msg);
-          setTimeout(() => {
-            setstatus("");
-          }, 3000);
-        }
+        setrecords([]);
+        setstatus("Registration Successfully");
+        window.location.href = "/login";
+        
       })
       .catch((error) => {
         console.error("Error while making the API call:", error);

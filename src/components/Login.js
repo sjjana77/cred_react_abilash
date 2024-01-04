@@ -47,7 +47,7 @@ const Login = ()=>{
 
     useEffect(() => {
         // Fetch data from the API
-        axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg')
+        axios.get('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg')
           .then(response => {
             // Update the state with the data from the API response
             setUsers(response.data);
@@ -138,7 +138,7 @@ const Login = ()=>{
                 }
               });
 
-            setloginstatus("Incorrect Password");
+            // setloginstatus("Incorrect Password");
 
 
 
