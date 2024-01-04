@@ -109,7 +109,6 @@ const Login = ()=>{
         }
     }
     const Loginn = ()=>{
-        let flag=0;
         if(regdata.userid===""){
             setloginstatus("Username Missing");
         }
@@ -117,18 +116,32 @@ const Login = ()=>{
             setloginstatus("Password Missing");
         }
         else{
-            console.log('abi');
+            setloginstatus("");
             users.forEach((user) => {
-                if (user.email === regdata.user) {
-                  flag = 1;
-                  window.location.href="/usersprofile";
+                if (user['email'] === regdata.userid && user['password'] === regdata.psw) {
+                    let user_get_detalils = {
+                        'id':user['id'],
+                        'user_id':user['user_id'],
+                        'email':user['email'],
+                        'mobile':user['mobile'],
+                        'role':user['role'],
+                        'skills':user['skills'],
+                        'img_path':''
+                    }
+                    updateuser_details(user_get_detalils);
+                    let str_user = user_get_detalils;
+                    str_user = JSON.stringify(str_user);
+                    sessionStorage.setItem("user_details",str_user);
+    
+                    setloginstatus("Successfully Logged In....");
+                    window.location.href="/usersprofile";
                 }
               });
 
+            setloginstatus("Incorrect Password");
 
 
 
-            setloginstatus("");
             const sendData = {
             user_id : regdata.userid,
             psw : btoa(regdata.psw)

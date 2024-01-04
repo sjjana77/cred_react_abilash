@@ -3,26 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const Usersprofile = ()=>{
-    const [overalldetails, setoveralldetails] = useState([
-        {
-          "_id": "6596203a8f133a03e8f91b4a",
-          "username": "abilash",
-          "mobile": "9080399133",
-          "image": "",
-          "role": "Employee",
-          "skills": "react",
-          "email": "abilashv281999@gmail.com"
-        },
-        {
-          "_id": "659621ac8f133a03e8f91b4c",
-          "username": "Abi",
-          "mobile": "",
-          "image": "",
-          "role": "",
-          "skills": "",
-          "email": ""
-        }
-      ]);
+    const [overalldetails, setoveralldetails] = useState();
     const Imgupload = ()=>{
         const formData = new FormData();
         formData.append("image",document.getElementById("file").files[0]);
@@ -100,7 +81,7 @@ const Usersprofile = ()=>{
         console.log(overalldetailss);
         console.log(e);
           setcurrdetails({
-            user_id:overalldetailss[e].user_id,
+            user_id:overalldetailss[e]._id,
             mobile:overalldetailss[e].mobile,
             email:overalldetailss[e].email,
             role:overalldetailss[e].role,
@@ -147,47 +128,23 @@ const Usersprofile = ()=>{
     const design = ()=>{
         let details = JSON.parse(window.sessionStorage.user_details);
         console.log(details);
-        if(details.role==="3"){
-            setdesignn(()=>{
-                return (
-                    <div className='employee'>
-                        <button className='btn btn-size' id='edit' onClick={()=>{Edit('emp');
-                            document.getElementById('file').classList='hidden';
-                            sessionStorage.setItem("edit","emp");}}><i  className="fa fa-edit"></i>Edit</button>
-                            <div className="screen__content justify-content-center">
-                            <br /> <br />
-                            <div className='emp'>
-                            
-                            <img className='profile-pics1' src={'http://localhost:3001/'+details.img_path} />
-                            
-                            <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>User_Id</div><div className='col lbl'>{details.user_id}</div></div> <br />
-                            <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Email</div><div className='col lbl'>{details.email}</div></div> <br />
-                            <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Mobile</div><div className='col lbl'>{details.mobile}</div></div> <br />
-                            <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Role</div><div className='col lbl'>{details.role}</div></div> <br />
-                            <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Skills</div><div className='col lbl'>{details.skills}</div></div> <br />                  
-                            </div>
-                            </div>
-                            </div>
-                )
-            });
-        }
-        else if(details.role==="2"){
-            sessionStorage.setItem("edit","");
+        // sessionStorage.setItem("edit","");
             axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg',details).
             then((result)=>{
+                console.log(result.data);
                 let d = result.data.map((a,i)=>{ 
-                    if(a.role==="Admin"){
-                       
-                        return(
-                            <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye disable"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit disable"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o disable"></i></td></tr></tbody>
-                        )
-                    }
-                    else{
+                    // if(a.role==="Admin"){
                        
                         return(
                             <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o"></i></td></tr></tbody>
                         )
-                    }
+                    // }
+                    // else{
+                       
+                    //     return(
+                    //         <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o"></i></td></tr></tbody>
+                    //     )
+                    // }
 
                 });
                 setdesignn(()=>{
@@ -204,32 +161,89 @@ const Usersprofile = ()=>{
                 //setoveralldetails(result);
                 //console.log(overalldetails);
             })
+        // if(details.role==="3"){
+        //     setdesignn(()=>{
+        //         return (
+        //             <div className='employee'>
+        //                 <button className='btn btn-size' id='edit' onClick={()=>{Edit('emp');
+        //                     document.getElementById('file').classList='hidden';
+        //                     sessionStorage.setItem("edit","emp");}}><i  className="fa fa-edit"></i>Edit</button>
+        //                     <div className="screen__content justify-content-center">
+        //                     <br /> <br />
+        //                     <div className='emp'>
+                            
+        //                     <img className='profile-pics1' src={'http://localhost:3001/'+details.img_path} />
+                            
+        //                     <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>User_Id</div><div className='col lbl'>{details.user_id}</div></div> <br />
+        //                     <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Email</div><div className='col lbl'>{details.email}</div></div> <br />
+        //                     <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Mobile</div><div className='col lbl'>{details.mobile}</div></div> <br />
+        //                     <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Role</div><div className='col lbl'>{details.role}</div></div> <br />
+        //                     <div className='row'><div className='col lbl'style={{fontWeight: "700",fontSize: "18px"}}>Skills</div><div className='col lbl'>{details.skills}</div></div> <br />                  
+        //                     </div>
+        //                     </div>
+        //                     </div>
+        //         )
+        //     });
+        // }
+        // else if(details.role==="2"){
+        //     sessionStorage.setItem("edit","");
+        //     axios.get('https://crudcrud.com/api/5e77ffbdcf7344b7a7a5faa255264aca/reg',details).
+        //     then((result)=>{
+        //         let d = result.data.map((a,i)=>{ 
+        //             if(a.role==="Admin"){
+                       
+        //                 return(
+        //                     <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye disable"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit disable"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o disable"></i></td></tr></tbody>
+        //                 )
+        //             }
+        //             else{
+                       
+        //                 return(
+        //                     <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o"></i></td></tr></tbody>
+        //                 )
+        //             }
+
+        //         });
+        //         setdesignn(()=>{
+        //             return (
+        //                 <table className='table table-striped'><thead><tr><th>Sno</th><th>User_Id</th><th>Email</th><th>Mobile</th><th>Role</th><th>Skills</th><th>View</th><th>Edit</th><th>Delete</th></tr></thead>
+        //                 {d}
+        //                 </table>
+        //             )
+        //         });
+        //         if(result.data.length!==0){
+        //           localStorage.setItem("overalldetails",JSON.stringify(result.data));
+        //           setoveralldetails(result.data);
+        //         }
+        //         //setoveralldetails(result);
+        //         //console.log(overalldetails);
+        //     })
            
-        }
-        else{
-            sessionStorage.setItem("edit","");
-            axios.post('http://localhost:3001/getdata',details).
-            then((result)=>{
-                let d = result.data.map((a,i)=>{
-                    return (
-                            <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o"></i></td></tr></tbody>
-                    )
-                });
-                setdesignn(()=>{
-                    return (
-                        <table className='table table-striped'><thead><tr><th>Sno</th><th>User_Id</th><th>Email</th><th>Mobile</th><th>Role</th><th>Skills</th><th>View</th><th>Edit</th><th>Delete</th></tr></thead>
-                        {d}
-                        </table>
-                    )
-                });
-                if(result.data.length!==0){
-                  localStorage.setItem("overalldetails",JSON.stringify(result.data));
-                  setoveralldetails(result.data);
-                }
-                // setoveralldetails(result);
-                // console.log(overalldetails);
-            })
-        }
+        // }
+        // else{
+        //     sessionStorage.setItem("edit","");
+        //     axios.post('http://localhost:3001/getdata',details).
+        //     then((result)=>{
+        //         let d = result.data.map((a,i)=>{
+        //             return (
+        //                     <tbody><tr><td>{i+1}</td><td>{a.user_id}</td><td>{a.email}</td><td>{a.mobile}</td><td>{a.role}</td><td>{a.skills}</td><td ><i rowid={i} onClick={(e)=>View(e.target.getAttribute("rowid"))} className="fa fa-eye"></i></td><td ><i rowid={i} onClick={(e)=>Edit(e.target.getAttribute("rowid"))} className="fa fa-edit"></i></td><td><i rowid={i} onClick={(e)=>Delete(e.target.getAttribute("rowid"))} className="fa fa-trash-o"></i></td></tr></tbody>
+        //             )
+        //         });
+        //         setdesignn(()=>{
+        //             return (
+        //                 <table className='table table-striped'><thead><tr><th>Sno</th><th>User_Id</th><th>Email</th><th>Mobile</th><th>Role</th><th>Skills</th><th>View</th><th>Edit</th><th>Delete</th></tr></thead>
+        //                 {d}
+        //                 </table>
+        //             )
+        //         });
+        //         if(result.data.length!==0){
+        //           localStorage.setItem("overalldetails",JSON.stringify(result.data));
+        //           setoveralldetails(result.data);
+        //         }
+        //         // setoveralldetails(result);
+        //         // console.log(overalldetails);
+        //     })
+        // }
 
     }
     useEffect(()=>{
