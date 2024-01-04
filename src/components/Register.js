@@ -1,7 +1,8 @@
 import React,{useEffect, useState} from 'react';
 import axios from 'axios';
 
-const Register=()=>{
+const Register=({api_url})=>{
+    // const api_url = "https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg";
     document.getElementsByTagName("html")[0].style.height = "144%";
     document.getElementsByTagName("body")[0].style.background = "linear-gradient(#141e30, #243b55)";
    
@@ -24,7 +25,7 @@ const [users, setUsers] = useState([]);
     // };
     useEffect(() => {
       // Fetch data from the API
-      axios.get('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg')
+      axios.get(api_url)
         .then(response => {
           // Update the state with the data from the API response
           setUsers(response.data);
@@ -42,7 +43,7 @@ const [users, setUsers] = useState([]);
 const handleimage = (e)=>{
     const formData = new FormData();
     formData.append("image",document.getElementById("image").files[0]);
-    axios.post('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg',formData).
+    axios.post(api_url,formData).
     then((result)=>{
         console.log(result.data.img_name);
             setrecords({...records,image:result.data.img_name})
@@ -105,7 +106,7 @@ const registerForm=()=>{
         )
       ))}
 
-      axios.post('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg', records)
+      axios.post(api_url, records)
       .then((result) => {
         setrecords([]);
         setstatus("Registration Successfully");

@@ -2,7 +2,8 @@ import './modal.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const Usersprofile = ()=>{
+const Usersprofile = ({api_url})=>{
+    // const api_url = "https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg";
     const [overalldetails, setoveralldetails] = useState([]);
     const [edit_id, set_edit_id] = useState('');
     const [edit_row_id, set_edit_row_id] = useState('');
@@ -11,7 +12,7 @@ const Usersprofile = ()=>{
         // formData.append("image",document.getElementById("file").files[0]);
         // formData.append("details",JSON.stringify(currdetails));
         // formData.append("editing",sessionStorage.getItem("editing"));
-        axios.put('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg/'+edit_id,currdetails).
+        axios.put(api_url+'/'+edit_id,currdetails).
         then((result)=>{
           let overalldetailss = [];
           overalldetailss = overalldetails;
@@ -105,7 +106,7 @@ const Usersprofile = ()=>{
         console.log(e.target.name);
     }
     const Update = ()=>{
-        axios.put('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg',currdetails).
+        axios.put(api_url+'/reg',currdetails).
         then((result)=>{
         });
     }
@@ -117,7 +118,7 @@ const Usersprofile = ()=>{
         overalldetailss = JSON.parse(localStorage.getItem("overalldetails"));
       }
         
-        axios.delete('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg/'+dbid).
+        axios.delete(api_url+'/reg/'+dbid).
         then((result)=>{
           let details = overalldetailss;
         console.log(details);
@@ -131,7 +132,7 @@ const Usersprofile = ()=>{
     const design = ()=>{
         let details = JSON.parse(window.sessionStorage.user_details);
         console.log(details);
-            axios.get('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg',details).
+            axios.get(api_url+'/reg',details).
             then((result)=>{
                 console.log(result.data);
                 let d = result.data.map((a,i)=>{ 

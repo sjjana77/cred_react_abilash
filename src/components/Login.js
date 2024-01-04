@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Login.css';
 
 const current_backendserver = "http://localhost:3001";
+// const api_url = "https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg";
 
 const WhichButton = ()=> {
     if((document.getElementById("userid") === document.activeElement)===false)  {
@@ -30,7 +31,7 @@ const WhichButtonPsd=  ()=>  {
     }
 }
 
-const Login = ()=>{
+const Login = ({api_url})=>{
     const [user_details,updateuser_details] = useState('');
     document.getElementsByTagName("html")[0].style.height = "100%";
     document.getElementsByTagName("body")[0].style.background = "linear-gradient(#141e30, #243b55)";
@@ -47,7 +48,7 @@ const Login = ()=>{
 
     useEffect(() => {
         // Fetch data from the API
-        axios.get('https://crudcrud.com/api/059581f518d94a9d85bdb69e69353173/reg')
+        axios.get(api_url)
           .then(response => {
             // Update the state with the data from the API response
             setUsers(response.data);
